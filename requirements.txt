@@ -6,7 +6,6 @@ openpyxl
 Pillow
 altair
 requests
-streamlit.components.v1
 streamlit-lottie
 plotly
 datetime
