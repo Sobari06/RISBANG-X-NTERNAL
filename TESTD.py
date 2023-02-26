@@ -48,7 +48,7 @@ st.subheader("Demografi Staff")
 print("-----------DATABASE KABINET------------")
 #https://docs.google.com/spreadsheets/d/1zD_tz_u73IzIj3HbMJxkDg5Ea7qDc99Is9mgY3aKlXU/edit#gid=0
 # Path file excel
-excel_path1 = "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/DATA/Model Database Kabinet.xlsx"
+excel_path1 = "DATA/Model Database Kabinet.xlsx"
 #sheet_id1 = '1zD_tz_u73IzIj3HbMJxkDg5Ea7qDc99Is9mgY3aKlXU'
 dfA = pd.read_excel(excel_path1)
 print(dfA)
@@ -58,7 +58,7 @@ print(dfA)
 #-----------DATABASE ANTAR BIRDEPT------------
 print("-----------DATABASE ANTAR BIRDEPT------------")
 #https://docs.google.com/spreadsheets/d/1EVYwc62ZlxDwPL1zNOgXu47sKlJtI1-UbhnbN2p-l9A/edit#gid=0
-excel_path2 = "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/DATA/Database Antar BirDept.xlsx"
+excel_path2 = "DATA/Database Antar BirDept.xlsx"
 #sheet_id2 = '1EVYwc62ZlxDwPL1zNOgXu47sKlJtI1-UbhnbN2p-l9A'
 dfB = pd.read_excel(excel_path2, parse_dates=['DATE_1'])
 
@@ -297,9 +297,9 @@ def display_staff_info( performance, attitude, contribution, attendance, activit
 st.title(" TOP 11 Staffs with Best Work Performance of The Month")
 
 # Path file excel
-excel_path = "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/DATA/TESTC.xlsx"
+excel_path = "DATA/TESTC.xlsx"
 # Path folder foto
-foto_folder = "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/"
+foto_folder = "Foto/"
 # Path folder foto kelompok staff
 poto_folder = {
     'Risbang': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Risbang/",
@@ -321,7 +321,7 @@ nilai_mutu_folder = "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Ekse
 
 # Baca file excel
 df = pd.read_excel(excel_path)
-df['C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto'] = 'Foto/' + df['Foto']
+df['Foto'] = 'Foto/' + df['Foto']
 df['Nilai Mutu'] = nilai_mutu_folder + df['Nilai Mutu'] + '.png'
 df = df.reset_index(drop=True)
 
