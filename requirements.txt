@@ -1,0 +1,14 @@
+streamlit 
+pandas 
+plotly_express
+openpyxl
+PIL
+altair
+requests
+json
+streamlit.components.v1
+streamlit_lottie
+plotly.graph_objs
+datetime
+os
+base64
