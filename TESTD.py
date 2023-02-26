@@ -317,7 +317,7 @@ poto_folder = {
 
 }
 # Path folder nilai mutu
-nilai_mutu_folder = "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/"
+nilai_mutu_folder = "A"
 
 # Baca file excel
 df = pd.read_excel(excel_path)
