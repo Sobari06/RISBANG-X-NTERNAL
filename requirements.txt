@@ -1,4 +1,4 @@
-python==3.10.8
+Python
 streamlit 
 pandas 
 plotly_express
