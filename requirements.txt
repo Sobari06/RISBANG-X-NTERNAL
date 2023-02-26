@@ -9,4 +9,3 @@ requests
 streamlit-lottie
 plotly
 datetime
-base64
