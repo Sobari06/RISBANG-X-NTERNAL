@@ -299,7 +299,7 @@ st.title(" TOP 11 Staffs with Best Work Performance of The Month")
 # Path file excel
 excel_path = "DATA/TESTC.xlsx"
 # Path folder foto
-foto_folder = "Foto"
+foto_folder = ""
 # Path folder foto kelompok staff
 poto_folder = {
     'Risbang': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Risbang/",
