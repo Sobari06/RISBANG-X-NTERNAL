@@ -317,7 +317,7 @@ poto_folder = {
 
 }
 # Path folder nilai mutu
-nilai_mutu_folder = "A"
+nilai_mutu_folder = ""
 
 # Baca file excel
 df = pd.read_excel(excel_path)
