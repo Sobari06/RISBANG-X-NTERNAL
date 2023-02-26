@@ -4,7 +4,7 @@ pandas
 plotly_express
 openpyxl
 Pillow
-altair vega_datasets
+altair
 requests
 json
 streamlit.components.v1
