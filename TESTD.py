@@ -11,6 +11,7 @@ from streamlit_lottie import st_lottie
 import plotly.graph_objs as go
 import datetime
 import os
+import matplotlib.pyplot as plt
 import base64
 
 #Mendefinisikan fungsi untuk menampilkan animasi Lottie
@@ -181,6 +182,36 @@ st.plotly_chart(create_chart(dfA), use_container_width=True)
 
 
 #=============================== PERBANDINGAN KINERJA ANTAR BIRDEPT ===========================================
+data = {
+    'Nama Staff': ['John', 'Sarah', 'Mike', 'Lisa', 'David', 'Mia', 'Oliver', 'Emily', 'Ryan', 'Sophie'],
+    'Divisi': ['Sales', 'Marketing', 'IT', 'Finance', 'Sales', 'Marketing', 'IT', 'Finance', 'Sales', 'Marketing'],
+    'Bulan': ['Januari', 'Januari', 'Februari', 'Februari', 'Maret', 'Maret', 'April', 'April', 'Mei', 'Mei'],
+    'Nilai Performa': [70, 80, 75, 85, 65, 90, 80, 75, 70, 85]
+}
+
+df = pd.DataFrame(data)
+def boxplot_divisi(df):
+    # Buat selectbox untuk memilih divisi
+    divisi = st.selectbox('Pilih Divisi', df['Divisi'].unique())
+
+    # Buat selectbox untuk memilih bulan
+    bulan = st.selectbox('Pilih Bulan', df['Bulan'].unique())
+
+    # Filter data berdasarkan divisi dan bulan yang dipilih
+    df_filter = df[(df['Divisi'] == divisi) & (df['Bulan'] == bulan)]
+
+    # Buat grafik box plot
+    fig, ax = plt.subplots()
+    ax.boxplot(df_filter['Nilai Performa'])
+    ax.set_title('Performa Kerja Divisi {} di Bulan {}'.format(divisi, bulan))
+    ax.set_ylabel('Nilai Performa')
+    st.pyplot(fig)
+boxplot_divisi(df)
+
+
+
+
+
 # Buat fungsi untuk membuat grafik
 def create_chart(dfB):
     fig = go.Figure()
