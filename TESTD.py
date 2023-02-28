@@ -190,18 +190,18 @@ dfZ = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id10}/export?f
 print(dfZ)
 
 # Sort data by month column
-df = df.sort_values('DATE_1')
+dfZ = dfZ.sort_values('DATE_1')
 
 # Sidebar for filters
 st.sidebar.header('Filter')
-selected_month = st.sidebar.selectbox('Select Month', df['DATE_1'].unique())
+selected_month = st.sidebar.selectbox('Select Month', dfZ['DATE_1'].unique())
 
 # Main content
 st.title('Performa Kerja Staff')
 st.write(f'Month: {selected_month}')
 
 # Create boxplot for all divisions
-df_filtered = df[df['DATE_1'] == selected_month]
+df_filtered = dfZ[dfZ['DATE_1'] == selected_month]
 if len(df_filtered) > 0:
     fig, ax = plt.subplots()
     sns.boxplot(x='DIVISI_1', y='NILAI_1', data=df_filtered, ax=ax)
