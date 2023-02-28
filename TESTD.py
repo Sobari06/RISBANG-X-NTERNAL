@@ -30,42 +30,39 @@ st_lottie(load_lottie_url(url))
 
 col1, col2= st.columns([2,1])
 with col1:
-            st.title(" Dashboard Performa Kerja Staff" )
+            st.title(" Dashboard Kinerja Pengurus" )
             st.subheader("Ormawa Eksekutif PKU IPB Kabinet Gantari Arti")   
 with col2:
         # Tampilkan informasi nilai mutu
-             st.image('RISBANG X INTERNAL.png', width=340)
+             st.image('RISBANG X INTERNAL.png', width=300)
 
 
 
 st.markdown('------')
-st.write('Dengan mengetahui performa tiap staf secara statistik, akan membantu Ormawa Eksekutif PKU IPB, khususnya Biro Internal dalam memonitoring kinerja tiap staf. Pembaharuan dashboard ini dilakukan setiap 2 bulan sekali.')
+st.write('Dengan mengetahui performa tiap pengurus secara statistik, akan membantu Ormawa Eksekutif PKU IPB, khususnya Biro Internal dalam memonitoring kinerja tiap pengurus. Pembaharuan dashboard ini dilakukan setiap 2 bulan sekali.')
 st.markdown('------')
-st.subheader("Demografi Staff")
+st.subheader("Demografi Pengurus Kabinet Gantari Arti")
 
 
 
 
 #-----------DATABASE KABINET------------
 print("-----------DATABASE KABINET------------")
-#https://docs.google.com/spreadsheets/d/1zD_tz_u73IzIj3HbMJxkDg5Ea7qDc99Is9mgY3aKlXU/edit#gid=0
-# Path file excel
-excel_path1 = "DATA/Model Database Kabinet.xlsx"
-#sheet_id1 = '1zD_tz_u73IzIj3HbMJxkDg5Ea7qDc99Is9mgY3aKlXU'
-dfA = pd.read_excel(excel_path1)
-print(dfA)
+# LINK CSV
+#https://docs.google.com/spreadsheets/d/19k-_Giv40KxhtykzPNLd3A86xnAa7gIEuQRjPHFrWAw/edit#gid=0
+sheet_id1 = '19k-_Giv40KxhtykzPNLd3A86xnAa7gIEuQRjPHFrWAw'
+dfA = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id1}/export?format=csv')
 
 
 
 #-----------DATABASE ANTAR BIRDEPT------------
 print("-----------DATABASE ANTAR BIRDEPT------------")
-#https://docs.google.com/spreadsheets/d/1EVYwc62ZlxDwPL1zNOgXu47sKlJtI1-UbhnbN2p-l9A/edit#gid=0
-excel_path2 = "DATA/Database Antar BirDept.xlsx"
-#sheet_id2 = '1EVYwc62ZlxDwPL1zNOgXu47sKlJtI1-UbhnbN2p-l9A'
-dfB = pd.read_excel(excel_path2, parse_dates=['DATE_1'])
 
-# Baca data dari file CSV
-#data = pd.read_csv('data.csv', parse_dates=['Bulan'])
+# LINK CSV
+#https://docs.google.com/spreadsheets/d/1h7wK5Zy331sLvhN0EHwEsnZPgtcgPTQOe6GLTBxQ0JE/edit
+sheet_id12 = '1h7wK5Zy331sLvhN0EHwEsnZPgtcgPTQOe6GLTBxQ0JE'
+dfB = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id12}/export?format=csv',parse_dates=['DATE_1'])
+
 
 # Buat fungsi untuk membuat grafik
 def create_chart(df, divisi):
@@ -80,8 +77,8 @@ def create_chart(df, divisi):
 #-----------DATABASE BEST Performance------------
 
 print("-----------DATABASE BEST Performance------------")
-#https://docs.google.com/spreadsheets/d/1-Q6YNsNFB3JOEwQlUmfHqYKGoNplS2LJN8MO7_QcaCg/edit#gid=0
-sheet_id3 = '1-Q6YNsNFB3JOEwQlUmfHqYKGoNplS2LJN8MO7_QcaCg'
+#https://docs.google.com/spreadsheets/d/1UWMla9vOWPNH0cehuhmvYbmWzBWVzaAPgHr9gS4GZJg/edit#gid=0
+sheet_id3 = '1UWMla9vOWPNH0cehuhmvYbmWzBWVzaAPgHr9gS4GZJg'
 dfC = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id3}/export?format=csv')
 print(dfC)
 
@@ -143,7 +140,7 @@ st.markdown('------')
 st.subheader("Hasil Analisis")
 
 #=============================== HASIL ANALISIS ===========================================
-dfA['DATE_2'] = pd.to_datetime(dfA['DATE_2'], format='%Y-%m-%d')
+dfA['DATE_2'] = pd.to_datetime(dfA['DATE_2'].apply(lambda x: x+'/1'), format='%m/%Y/%d')
 # Compute percentage increase in performance
 current_month = dfA['DATE_2'].max()
 current_performance = dfA[dfA['DATE_2'] == current_month]['GANTARI ARTI'].values[0]
@@ -183,6 +180,8 @@ st.plotly_chart(create_chart(dfA), use_container_width=True)
 
 
 #=============================== PERBANDINGAN KINERJA ANTAR BIRDEPT ===========================================
+# Buat fungsi untuk membuat grafik
+
 #https://docs.google.com/spreadsheets/d/1SH7ctXNUN8TIs1_1rf_dhQnj9kx-iYltR43rbS09nIw/edit?usp=sharing
 sheet_id10 = '1SH7ctXNUN8TIs1_1rf_dhQnj9kx-iYltR43rbS09nIw'
 dfZ = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id10}/export?format=csv')
@@ -192,48 +191,37 @@ print(dfZ)
 # Sort data by month column
 dfZ = dfZ.sort_values('DATE_1')
 
-# Sidebar for filters
-st.sidebar.header('Filter')
-selected_month = st.sidebar.selectbox('Select Month', dfZ['DATE_1'].unique())
+# # Sidebar for filters
+# st.sidebar.header('Filter')
+# selected_month = st.sidebar.selectbox('Select Month', dfZ['DATE_1'].unique())
+
+# Tampilkan dropdown untuk memilih bulan
+selected_month = st.selectbox("Pilih Bulan",dfZ['DATE_1'].unique())
 
 # Main content
-st.title('Performa Kerja Staff')
+st.title('Perbandingan Kinerja BPH dan Antar Biro/Departemen')
 st.write(f'Month: {selected_month}')
 
 # Create boxplot for all divisions
 df_filtered = dfZ[dfZ['DATE_1'] == selected_month]
 if len(df_filtered) > 0:
-    fig, ax = plt.subplots()
-    sns.boxplot(x='DIVISI_1', y='NILAI_1', data=df_filtered, ax=ax)
-    ax.set_title(f'Boxplot Performa Kerja Seluruh Divisi ({selected_month})')
+    fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, figsize=(8, 10))
+    sns.boxplot(x='BPH dan Biro/Departemen', y='Performa', data=df_filtered, ax=ax1)
+    ax1.set_title(f'Boxplot Performa Kerja BPH dan Seluruh Biro/Departemen ({selected_month})')
     
+  
     # Rotate x-labels for better visibility
-    plt.xticks(rotation=45, ha='right')
+    ax1.set_xticklabels(ax1.get_xticklabels(), rotation=45, ha='right')
+    
+     # Distribution plot
+    sns.kdeplot(data=df_filtered, x='Performa', hue='BPH dan Biro/Departemen', multiple='stack', ax=ax2)
+    ax2.set_title(f'Sebaran Performa Kerja BPH dan Seluruh Biro/Departemen ({selected_month})')
+    ax2.legend(loc='upper right',title='Divisi')
+    
+    fig.tight_layout()
     st.pyplot(fig)
-
    
 
-
-
-
-# Buat fungsi untuk membuat grafik
-def create_chart(dfB):
-    fig = go.Figure()
-    
-    for col in dfB.columns[1:]:
-        fig.add_trace(go.Scatter(x=dfB['DATE_1'], y=dfB[col], mode='lines', name=col))
-        
-    fig.update_layout(title='Perbandingan Performa Kerja Antar Birdept', xaxis_title='Bulan', yaxis_title='Performa')
-    return fig
-
-# Buat aplikasi Streamlit
-st.title('Grafik Perbandingan Performa Kerja Antar Birdept')
-st.markdown('''
-            Grafik interaktif yang membandingkan performa kerja antar Birdept.
-            ''')
-
-# Tampilkan grafik
-st.plotly_chart(create_chart(dfB), use_container_width=True)
 
  #=============================== KINERJA Tiap BIRDEPT ===========================================
 
@@ -276,9 +264,9 @@ def create_chart(df, divisi):
     return fig
 
 # Create Streamlit app
-st.title('Grafik Time Series Performa Kabinet Gantari Arti')
+st.title('Grafik Time Series Performa Biro dan Departemen')
 st.markdown('''
-            Grafik time series interaktif untuk menampilkan nilai performa Kabinet Gantari Arti.
+            Grafik time series interaktif untuk menampilkan nilai Biro dan Departemen.
             ''')
 
 # Show dropdown to select division
@@ -290,8 +278,288 @@ filtered_data = dfB[['DATE_1', divisi, 'Trend']].copy()
 # Show chart
 st.plotly_chart(create_chart(filtered_data, divisi), use_container_width=True)
 
+#=============================== BEST PERFORMANCE BPH SEBAGAI SC ===========================================
+def display_staff_info( performance, attitude, contribution, attendance, activity, nilai_mutu, photo_path):
+    
+      # Tampilkan deskripsi staff
+    col1, col2, col3 = st.columns([2,2,1])
+    with col1:
+     st.image(foto_staff, width=280)
 
-#=============================== BEST PERFORMANCE WORKERS ===========================================
+    with col2:
+       # Tampilkan informasi nilai mutu
+       st.image(foto_nilai_mutu, width=280)
+
+    with col3:
+        st.write("Performa: ", performance)
+
+         # Tampilkan nilai sikap
+        st.image("attitude_logo.png", width=50)
+        st.write("Sikap: ", attitude)
+
+        # Tampilkan nilai kontribusi
+        st.image("contribution_logo.png", width=50)
+        st.write("Kontribusi: ", contribution)
+
+        # Tampilkan nilai kehadiran
+        st.image("attendance_logo.png", width=50)
+        st.write("Kehadiran: ", attendance)
+
+        # Tampilkan nilai keaktifan
+        st.image("activity_logo.png", width=50)
+        st.write("Keaktifan: ", activity)
+
+#https://docs.google.com/spreadsheets/d/1g2KHjjvTDUC4qkTwBImNWmPdUuZ0ejNIeNnvLxIFyxo/edit#gid=0
+sheet_id4 = '1g2KHjjvTDUC4qkTwBImNWmPdUuZ0ejNIeNnvLxIFyxo'
+df = CSV_Link_1 = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id4}/export?format=csv')
+print(dfC)
+
+# Tambahkan sidebar
+
+
+# Membuat sidebar
+with st.sidebar:
+    st.subheader("Menu Navigasi")
+    menu = ["BPH sebagai SC", "Biro dan Departemen","Pimpinan","TOP 11 Staff"]
+    selected_menu = st.sidebar.selectbox("Best Performance", menu) 
+    # Jika menu "BPH dengan Performa Kerja Terbaik" dipilih
+
+if selected_menu == "BPH sebagai SC":
+
+    # Set judul halaman
+    st.title("BPH dengan Performa Kerja Terbaik")
+
+
+
+    # Path folder foto
+    foto_folder = "FOTO STAFF DAN IKON/"
+
+    # Path folder nilai mutu
+    nilai_mutu_folder = "FOTO STAFF DAN IKON/"
+
+    # Baca file CSV
+
+    #df['C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto'] = 'Foto/' + df['Foto']
+    df = df.rename(columns={'FOTO STAFF DAN IKON/': 'Path Foto'})
+    # Tambahkan prefix 'Foto/' pada nilai kolom 'Foto' dan simpan hasilnya pada kolom baru 'Path Foto'
+    df['Path Foto'] = 'FOTO STAFF DAN IKON/' + df['Foto']
+    # Hapus kolom 'Foto' karena sudah tidak diperlukan lagi
+    df = df.drop(columns=['Foto'])
+
+    df['Nilai Mutu'] = nilai_mutu_folder + df['Nilai Mutu'] + '.png'
+    df = df.reset_index(drop=True)
+
+
+    # Buat list bulan
+    months = df['Bulan'].unique()
+
+    # Tampilkan dropdown untuk memilih bulan
+    selected_month = st.selectbox("Pilih Bulan", months)
+
+    # Filter data berdasarkan bulan yang dipilih
+    filtered_df = df[df['Bulan'] == selected_month]
+
+    # Urutkan data berdasarkan nilai performa
+    sorted_df = filtered_df.sort_values(by=['Performa'], ascending=False)
+
+    print(sorted_df)
+
+    # Tampilkan informasi staff
+    for i, row in sorted_df.iterrows():
+        name = row['Nama']
+        division = row['Divisi']
+        performance = row['Performa']
+        photo_path = row['Path Foto']
+        attitude = row['Sikap']
+        contribution = row['Kontribusi']
+        attendance = row['Kehadiran']
+        activity = row['Keaktifan']
+        nilai_mutu = row['Nilai Mutu']
+        foto_nilai_mutu = Image.open(nilai_mutu)
+        foto_staff = Image.open(photo_path)
+        
+        st.subheader(name)
+        display_staff_info( performance, attitude, contribution, attendance, activity, nilai_mutu, photo_path)
+
+
+
+
+#=============================== BEST PERFORMANCE BIRDEPT ===========================================
+def display_staff_info( performance,nilai_mutu, photo_path):
+    
+      # Tampilkan deskripsi staff
+    col1, col2, col3 = st.columns([2,2,1])
+    with col1:
+     st.image(foto_staff, width=280)
+
+    with col2:
+       # Tampilkan informasi nilai mutu
+       st.image(foto_nilai_mutu, width=280)
+
+    with col3:
+        st.write("Performa: ", performance)
+
+
+#https://docs.google.com/spreadsheets/d/1eNp46rCBAWo0axXG_FG6ZZorqrxDRa3PwqgmSUAhBR4/edit#gid=0
+sheet_id5 = '1eNp46rCBAWo0axXG_FG6ZZorqrxDRa3PwqgmSUAhBR4'
+df = CSV_Link_2 = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id5}/export?format=csv')
+print(dfC)
+
+
+
+# Jika menu "BPH dengan Performa Kerja Terbaik" dipilih
+if selected_menu == "Biro dan Departemen":
+# Set judul halaman
+    st.title("Biro dan Departemen")
+
+
+    # Path folder foto
+    foto_folder = "FOTO STAFF DAN IKON/"
+
+    # Path folder nilai mutu
+    nilai_mutu_folder = "FOTO STAFF DAN IKON/"
+
+    #df['C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto'] = 'Foto/' + df['Foto']
+    df = df.rename(columns={'FOTO STAFF DAN IKON/': 'Path Foto'})
+    # Tambahkan prefix 'Foto/' pada nilai kolom 'Foto' dan simpan hasilnya pada kolom baru 'Path Foto'
+    df['Path Foto'] = 'FOTO STAFF DAN IKON/' + df['Foto']
+    # Hapus kolom 'Foto' karena sudah tidak diperlukan lagi
+    df = df.drop(columns=['Foto'])
+
+    df['Nilai Mutu'] = nilai_mutu_folder + df['Nilai Mutu'] + '.png'
+    df = df.reset_index(drop=True)
+
+
+
+    # Buat list bulan
+    months = df['Bulan'].unique()
+
+    # Tampilkan dropdown untuk memilih bulan
+    selected_month = st.selectbox("Pilih Bulan", months,key="select_month_1")
+
+    # Filter data berdasarkan bulan yang dipilih
+    filtered_df = df[df['Bulan'] == selected_month]
+
+    # Urutkan data berdasarkan nilai performa
+    sorted_df = filtered_df.sort_values(by=['Performa'], ascending=False)
+
+    print(sorted_df)
+
+    # Tampilkan informasi staff
+    for i, row in sorted_df.iterrows():
+        name = row['Nama']
+        performance = row['Performa']
+        photo_path = row['Path Foto']
+        nilai_mutu = row['Nilai Mutu']
+        foto_nilai_mutu = Image.open(nilai_mutu)
+        foto_staff = Image.open(photo_path)
+        
+        st.subheader(name)
+        display_staff_info( performance, nilai_mutu, photo_path)
+
+
+
+
+
+#=============================== BEST PERFORMANCE Pimpinan ===========================================
+def display_staff_info( performance, attitude, contribution, attendance, activity, nilai_mutu, photo_path):
+    
+      # Tampilkan deskripsi staff
+    col1, col2, col3 = st.columns([2,2,1])
+    with col1:
+     st.image(foto_staff, width=280)
+
+    with col2:
+       # Tampilkan informasi nilai mutu
+       st.image(foto_nilai_mutu, width=280)
+
+    with col3:
+        st.write("Performa: ", performance)
+
+         # Tampilkan nilai sikap
+        st.image("attitude_logo.png", width=50)
+        st.write("Sikap: ", attitude)
+
+        # Tampilkan nilai kontribusi
+        st.image("contribution_logo.png", width=50)
+        st.write("Kontribusi: ", contribution)
+
+        # Tampilkan nilai kehadiran
+        st.image("attendance_logo.png", width=50)
+        st.write("Kehadiran: ", attendance)
+
+        # Tampilkan nilai keaktifan
+        st.image("activity_logo.png", width=50)
+        st.write("Keaktifan: ", activity)
+
+#https://docs.google.com/spreadsheets/d/18_GUDHDtBNhBddHL-2m0AYNtdepN_BFOHJULOCOv31Q/edit
+sheet_id6 = '18_GUDHDtBNhBddHL-2m0AYNtdepN_BFOHJULOCOv31Q'
+df = CSV_Link_3 = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id6}/export?format=csv')
+print(dfC)
+
+# Jika menu "BPH dengan Performa Kerja Terbaik" dipilih
+if selected_menu == "Pimpinan":
+
+# Set judul halaman
+    st.title("Pimpinan")
+
+
+
+
+    # Path folder foto
+    foto_folder = "FOTO STAFF DAN IKON/"
+
+    # Path folder nilai mutu
+    nilai_mutu_folder = "FOTO STAFF DAN IKON/"
+
+
+    #df['C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto'] = 'Foto/' + df['Foto']
+    df = df.rename(columns={'FOTO STAFF DAN IKON/': 'Path Foto'})
+
+    # Tambahkan prefix 'Foto/' pada nilai kolom 'Foto' dan simpan hasilnya pada kolom baru 'Path Foto'
+    df['Path Foto'] = 'FOTO STAFF DAN IKON/' + df['Foto']
+    # Hapus kolom 'Foto' karena sudah tidak diperlukan lagi
+    df = df.drop(columns=['Foto'])
+
+    df['Nilai Mutu'] = nilai_mutu_folder + df['Nilai Mutu'] + '.png'
+    df = df.reset_index(drop=True)
+
+
+    # Buat list bulan
+    months = df['Bulan'].unique()
+
+    # Tampilkan dropdown untuk memilih bulan
+    selected_month = st.selectbox("Pilih Bulan", months, key="select_month_2")
+
+    # Filter data berdasarkan bulan yang dipilih
+    filtered_df = df[df['Bulan'] == selected_month]
+
+    # Urutkan data berdasarkan nilai performa
+    sorted_df = filtered_df.sort_values(by=['Performa'], ascending=False)
+
+    print(sorted_df)
+
+
+    # Tampilkan informasi staff
+    for i, row in sorted_df.iterrows():
+        name = row['Nama']
+        division = row['Divisi']
+        performance = row['Performa']
+        photo_path = row['Path Foto']
+        attitude = row['Sikap']
+        contribution = row['Kontribusi']
+        attendance = row['Kehadiran']
+        activity = row['Keaktifan']
+        nilai_mutu = row['Nilai Mutu']
+        foto_nilai_mutu = Image.open(nilai_mutu)
+        foto_staff = Image.open(photo_path)
+        
+        st.subheader(name)
+        display_staff_info( performance, attitude, contribution, attendance, activity, nilai_mutu, photo_path)
+
+  
+
+#=============================== BEST PERFORMANCE STAFF ===========================================
 
 
 def display_staff_info( performance, attitude, contribution, attendance, activity, nilai_mutu, photo_path):
@@ -325,71 +593,64 @@ def display_staff_info( performance, attitude, contribution, attendance, activit
         st.write("Keaktifan: ", activity)
 
        
-       
+ #https://docs.google.com/spreadsheets/d/1UWMla9vOWPNH0cehuhmvYbmWzBWVzaAPgHr9gS4GZJg/edit#gid=0
+sheet_id7 = '1UWMla9vOWPNH0cehuhmvYbmWzBWVzaAPgHr9gS4GZJg'
+df = CSV_Link_4 = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id7}/export?format=csv')      
 
-
+# Jika menu "BPH dengan Performa Kerja Terbaik" dipilih
+if selected_menu == "TOP 11 Staff":
 # Set judul halaman
-st.title(" TOP 11 Staffs with Best Work Performance of The Month")
-
-# Path file excel
-excel_path = "DATA/TESTC.xlsx"
-# Path folder foto
-foto_folder = ""
-# Path folder foto kelompok staff
-poto_folder = {
-    'Risbang': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Risbang/",
-    'Medbrand': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Medbrand/",
-    'SLH': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/SLH/",
-    'Adkesmah': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Adkesmah/",
-    'PSDM': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/PSDM/",
-    'Bismit': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Bismit",
-    'Internal': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Internal/",
-    'BPH': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/BPH/",
-    'Peraga': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Peraga/",
-    'Senbud': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Senbud/",
-    'Kastrat': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Kastrat",
-    'Akpres': "C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto/Akpres/",
-
-}
-# Path folder nilai mutu
-nilai_mutu_folder = ""
-
-# Baca file excel
-df = pd.read_excel(excel_path)
-df['Foto'] = 'Foto/' + df['Foto']
-df['Nilai Mutu'] = nilai_mutu_folder + df['Nilai Mutu'] + '.png'
-df = df.reset_index(drop=True)
+    st.title("TOP 11 Staff")
 
 
-# Buat list bulan
-months = df['Bulan'].unique()
 
-# Tampilkan dropdown untuk memilih bulan
-selected_month = st.selectbox("Pilih Bulan", months)
 
-# Filter data berdasarkan bulan yang dipilih
-filtered_df = df[df['Bulan'] == selected_month]
+    # Path folder foto
+    foto_folder = "FOTO STAFF DAN IKON/"
 
-# Urutkan data berdasarkan nilai performa
-sorted_df = filtered_df.sort_values(by=['Performa'], ascending=False)
+    # Path folder nilai mutu
+    nilai_mutu_folder = "FOTO STAFF DAN IKON/"
 
-print(sorted_df)
+    #df['C:/Users/user/Documents/ST03/Project/Dashboard_Project/Eksekutif Ormawa PKU 2023-2024/Work Performances Dashboard/Foto'] = 'Foto/' + df['Foto']
+    df = df.rename(columns={'FOTO STAFF DAN IKON/': 'Path Foto'})
+    # st.write(df.head())
+    # Tambahkan prefix 'Foto/' pada nilai kolom 'Foto' dan simpan hasilnya pada kolom baru 'Path Foto'
+    df['Path Foto'] = 'FOTO STAFF DAN IKON/' + df['Foto']
+    # Hapus kolom 'Foto' karena sudah tidak diperlukan lagi
+    df = df.drop(columns=['Foto'])
 
-# Tampilkan informasi staff
-for i, row in sorted_df.iterrows():
-    name = row['Nama']
-    division = row['Divisi']
-    performance = row['Performa']
-    photo_path = foto_folder + row['Foto']
-    attitude = row['Sikap']
-    contribution = row['Kontribusi']
-    attendance = row['Kehadiran']
-    activity = row['Keaktifan']
-    nilai_mutu = row['Nilai Mutu']
-    foto_nilai_mutu = Image.open(nilai_mutu)
-    foto_staff = Image.open(photo_path)
-    
-    st.subheader(name)
-    display_staff_info( performance, attitude, contribution, attendance, activity, nilai_mutu, photo_path)
+    df['Nilai Mutu'] = nilai_mutu_folder + df['Nilai Mutu'] + '.png'
+    df = df.reset_index(drop=True)
 
-  
+
+
+    # Buat list bulan
+    months = df['Bulan'].unique()
+
+    # Tampilkan dropdown untuk memilih bulan
+    selected_month = st.selectbox("Pilih Bulan", months, key="select_month_3")
+
+    # Filter data berdasarkan bulan yang dipilih
+    filtered_df = df[df['Bulan'] == selected_month]
+
+    # Urutkan data berdasarkan nilai performa
+    sorted_df = filtered_df.sort_values(by=['Performa'], ascending=False)
+
+    print(sorted_df)
+
+    # Tampilkan informasi staff
+    for i, row in sorted_df.iterrows():
+        name = row['Nama']
+        division = row['Divisi']
+        performance = row['Performa']
+        photo_path = row['Path Foto']
+        attitude = row['Sikap']
+        contribution = row['Kontribusi']
+        attendance = row['Kehadiran']
+        activity = row['Keaktifan']
+        nilai_mutu = row['Nilai Mutu']
+        foto_nilai_mutu = Image.open(nilai_mutu)
+        foto_staff = Image.open(photo_path)
+        
+        st.subheader(name)
+        display_staff_info( performance, attitude, contribution, attendance, activity, nilai_mutu, photo_path)
