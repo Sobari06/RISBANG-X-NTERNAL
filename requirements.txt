@@ -10,3 +10,4 @@ streamlit-lottie
 plotly
 datetime
 matplotlib
+seaborn
