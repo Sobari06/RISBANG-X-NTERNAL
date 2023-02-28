@@ -206,6 +206,9 @@ if len(df_filtered) > 0:
     fig, ax = plt.subplots()
     sns.boxplot(x='DIVISI_1', y='NILAI_1', data=df_filtered, ax=ax)
     ax.set_title(f'Boxplot Performa Kerja Seluruh Divisi ({selected_month})')
+    
+    # Rotate x-labels for better visibility
+    plt.xticks(rotation=45, ha='right')
     st.pyplot(fig)
 
    
