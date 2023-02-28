@@ -190,52 +190,25 @@ dfZ = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id10}/export?f
 print(dfZ)
 
 # Sort data by month column
-dfZ = dfZ.sort_values('DATE_1')
+df = df.sort_values('DATE_1')
 
 # Sidebar for filters
 st.sidebar.header('Filter')
-selected_divisi = st.sidebar.selectbox('Select Division', dfZ['DIVISI_1'].unique())
+selected_month = st.sidebar.selectbox('Select Month', df['DATE_1'].unique())
 
 # Main content
 st.title('Performa Kerja Staff')
-st.write(f'DIVISI_1: {selected_divisi}')
+st.write(f'Month: {selected_month}')
 
-# Create boxplot for each month
-for month in dfZ['DATE_1'].unique():
-    df_filtered = dfZ[(dfZ['DATE_1'] == month) & (dfZ['DIVISI_1'] == selected_divisi)]
-    if len(df_filtered) > 0:
-        fig, ax = plt.subplots()
-        sns.boxplot(x='DIVISI_1', y='NILAI_1', data=df_filtered, ax=ax)
-        ax.set_title(f'Boxplot Performa Kerja Divisi {selected_divisi} ({month})')
-        st.write(f'Bulan: {month}')
-        st.pyplot(fig)
-        
-data = {
-    'Nama Staff': ['John', 'Sarah', 'Mike', 'Lisa', 'David', 'Mia', 'Oliver', 'Emily', 'Ryan', 'Sophie'],
-    'Divisi': ['Sales', 'Marketing', 'IT', 'Finance', 'Sales', 'Marketing', 'IT', 'Finance', 'Sales', 'Marketing'],
-    'Bulan': ['Januari', 'Januari', 'Februari', 'Februari', 'Maret', 'Maret', 'April', 'April', 'Mei', 'Mei'],
-    'Nilai Performa': [70, 80, 75, 85, 65, 90, 80, 75, 70, 85]
-}
-
-df = pd.DataFrame(data)
-def boxplot_divisi(df):
-    # Buat selectbox untuk memilih divisi
-    divisi = st.selectbox('Pilih Divisi', df['Divisi'].unique())
-
-    # Buat selectbox untuk memilih bulan
-    bulan = st.selectbox('Pilih Bulan', df['Bulan'].unique())
-
-    # Filter data berdasarkan divisi dan bulan yang dipilih
-    df_filter = df[(df['Divisi'] == divisi) & (df['Bulan'] == bulan)]
-
-    # Buat grafik box plot
+# Create boxplot for all divisions
+df_filtered = df[df['DATE_1'] == selected_month]
+if len(df_filtered) > 0:
     fig, ax = plt.subplots()
-    ax.boxplot(df_filter['Nilai Performa'])
-    ax.set_title('Performa Kerja Divisi {} di Bulan {}'.format(divisi, bulan))
-    ax.set_ylabel('Nilai Performa')
+    sns.boxplot(x='DIVISI_1', y='NILAI_1', data=df_filtered, ax=ax)
+    ax.set_title(f'Boxplot Performa Kerja Seluruh Divisi ({selected_month})')
     st.pyplot(fig)
-boxplot_divisi(df)
 
+   
 
 
 
