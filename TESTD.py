@@ -13,6 +13,7 @@ import datetime
 import os
 import matplotlib.pyplot as plt
 import base64
+import seaborn as sns
 
 #Mendefinisikan fungsi untuk menampilkan animasi Lottie
 def load_lottie_url(url: str):
@@ -182,6 +183,33 @@ st.plotly_chart(create_chart(dfA), use_container_width=True)
 
 
 #=============================== PERBANDINGAN KINERJA ANTAR BIRDEPT ===========================================
+#https://docs.google.com/spreadsheets/d/1LwTgGKFN9V77ig2mVJ2AMYsN5EY7i_b09Y6RIYJb8ug/edit#gid=0
+sheet_id10 = '1LwTgGKFN9V77ig2mVJ2AMYsN5EY7i_b09Y6RIYJb8ug'
+dfZ = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id10}/export?format=csv')
+
+print(dfZ)
+
+# Sort data by month column
+dfZ = dfZ.sort_values('DATE_1')
+
+# Sidebar for filters
+st.sidebar.header('Filter')
+selected_divisi = st.sidebar.selectbox('Select Division', dfZ['DIVISI_1'].unique())
+
+# Main content
+st.title('Performa Kerja Staff')
+st.write(f'DIVISI_1: {selected_divisi}')
+
+# Create boxplot for each month
+for month in dfZ['DATE_1'].unique():
+    df_filtered = dfZ[(dfZ['DATE_1'] == month) & (dfZ['DIVISI_1'] == selected_divisi)]
+    if len(df_filtered) > 0:
+        fig, ax = plt.subplots()
+        sns.boxplot(x='DIVISI_1', y='Nilai Performa', data=df_filtered, ax=ax)
+        ax.set_title(f'Boxplot Performa Kerja Divisi {selected_divisi} ({month})')
+        st.write(f'Bulan: {month}')
+        st.pyplot(fig)
+        
 data = {
     'Nama Staff': ['John', 'Sarah', 'Mike', 'Lisa', 'David', 'Mia', 'Oliver', 'Emily', 'Ryan', 'Sophie'],
     'Divisi': ['Sales', 'Marketing', 'IT', 'Finance', 'Sales', 'Marketing', 'IT', 'Finance', 'Sales', 'Marketing'],
