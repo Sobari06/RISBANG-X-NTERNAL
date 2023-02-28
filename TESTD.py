@@ -183,8 +183,8 @@ st.plotly_chart(create_chart(dfA), use_container_width=True)
 
 
 #=============================== PERBANDINGAN KINERJA ANTAR BIRDEPT ===========================================
-#https://docs.google.com/spreadsheets/d/1LwTgGKFN9V77ig2mVJ2AMYsN5EY7i_b09Y6RIYJb8ug/edit#gid=0
-sheet_id10 = '1LwTgGKFN9V77ig2mVJ2AMYsN5EY7i_b09Y6RIYJb8ug'
+#https://docs.google.com/spreadsheets/d/1SH7ctXNUN8TIs1_1rf_dhQnj9kx-iYltR43rbS09nIw/edit#gid=0
+sheet_id10 = '1SH7ctXNUN8TIs1_1rf_dhQnj9kx-iYltR43rbS09nIw'
 dfZ = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id10}/export?format=csv')
 
 print(dfZ)
