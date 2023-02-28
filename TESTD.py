@@ -205,7 +205,7 @@ for month in dfZ['DATE_1'].unique():
     df_filtered = dfZ[(dfZ['DATE_1'] == month) & (dfZ['DIVISI_1'] == selected_divisi)]
     if len(df_filtered) > 0:
         fig, ax = plt.subplots()
-        sns.boxplot(x='DIVISI_1', y='Nilai Performa', data=df_filtered, ax=ax)
+        sns.boxplot(x='DIVISI_1', y='NILAI_1', data=df_filtered, ax=ax)
         ax.set_title(f'Boxplot Performa Kerja Divisi {selected_divisi} ({month})')
         st.write(f'Bulan: {month}')
         st.pyplot(fig)
